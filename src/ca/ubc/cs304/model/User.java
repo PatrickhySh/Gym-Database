@@ -14,11 +14,9 @@ public class User {
     public String getName() {
         return name;
     }
-
     public int getUserId() {
         return userId;
     }
-
     public int getPhoneNumber() {
         return phoneNumber;
     }
