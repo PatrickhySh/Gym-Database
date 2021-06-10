@@ -1,30 +1,35 @@
 CREATE TABLE Equipment(
-    Name CHAR(20) PRIMARY KEY,
-    EquipmentID INTEGER
+    name CHAR(20) PRIMARY KEY,
+    equipmentID INTEGER
 );
 
 CREATE TABLE ExerciseWithEquipment(
-    Name CHAR(20) PRIMARY KEY,
-    EquipmentID INTEGER,
-    FOREIGN KEY(EquipmentID) REFERENCES Equipment ON DELETE CASCADE
+    name CHAR(20) PRIMARY KEY,
+    equipmentID INTEGER,
+    FOREIGN KEY(equipmentID) REFERENCES Equipment ON DELETE CASCADE
 );
 
 CREATE TABLE ExerciseContainsExercisePlan(
-    Name CHAR(20),
+    name CHAR(20),
     planID INTEGER,
-    PRIMARY KEY(Name, planID),
-    FOREIGN KEY(Name) REFERENCES ExerciseWithEquipment ON DELETE CASCADE,
+    PRIMARY KEY(name, planID),
+    FOREIGN KEY(name) REFERENCES ExerciseWithEquipment ON DELETE CASCADE,
     FOREIGN KEY(planID) REFERENCES ExercisePlan ON DELETE CASCADE
 );
 
 CREATE TABLE ExercisePlan(
-    Name CHAR(20),
-    planID INTEGER,
-    PRIMARY KEY(Name, planID)
+    name CHAR(20),
+    planID INTEGER PRIMARY KEY
+);
+
+CREATE TABLE ExerciseGoal(
+    name CHAR(20) PRIMARY KEY,
+    goal CHAR(20),
+    FOREIGN KEY(name) REFERENCES ExercisePlan(name)
 );
 
 CREATE TABLE UserWithDietPlan(
-    Name CHAR(20),
+    name CHAR(20),
     userID INTEGER PRIMARY KEY,
     phone_number CHAR(20),
     dietPlanID INTEGER NULL,
@@ -38,9 +43,16 @@ CREATE TABLE UserPracticesExercisePlan(
 );
 
 CREATE TABLE Trainer(
-    TrainerID INTEGER PRIMARY KEY,
-    Name CHAR(20),
+    trainerID INTEGER PRIMARY KEY,
+    name CHAR(20),
     phone_number CHAR(20)
+);
+
+CREATE TABLE CertificateWithTrainer(
+    certId INTEGER PRIMARY KEY,
+    name CHAR(20),
+    trainerID INTEGER,
+    FOREIGN KEY(trainerID) REFERENCES Trainer ON DELETE SET NULL
 );
 
 CREATE TABLE TrainerTrainsUser(
@@ -67,9 +79,9 @@ CREATE TABLE DietPlan(
 
 CREATE TABLE DietPlanConsistsConsumable(
     planId: INTEGER,
-    Name: char(20),
+    name: char(20),
     portionByGramOrMl: double,
-    PRIMARY KEY(planId, Name),
+    PRIMARY KEY(planId, name),
     FOREIGN KEY(planId) REFERENCES DietPlan ON DELETE NO ACTION,
     FOREIGN KEY(name) REFERENCES Consumable ON DELETE CASCADE
 );
