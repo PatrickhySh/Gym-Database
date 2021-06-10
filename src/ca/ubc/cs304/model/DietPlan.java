@@ -1,30 +1,16 @@
 package ca.ubc.cs304.model;
 
-import java.util.ArrayList;
-
 public class DietPlan {
     private final int planId;
-    private ArrayList<Consumable> diet;
+    private final String name;
 
-    public DietPlan(int id) {
-        planId = id;
-        diet = new ArrayList<>();
+    public DietPlan(int id, String name) {
+        this.planId = id;
+        this.name = name;
     }
 
-    public void addConsumable(Consumable c) {
-        diet.add(c);
-    }
-
-    public Boolean removeConsumable(Consumable c) {
-        return diet.remove(c);
-    }
-
-    public int getTotalCalories() {
-        int total = 0;
-        for (Consumable c : diet) {
-            total += c.getCalorieDensity() * c.getAmount();
-        }
-        return total;
+    public String getName() {
+        return this.name;
     }
 
     public int getPlanId() {

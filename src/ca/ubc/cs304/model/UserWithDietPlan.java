@@ -1,14 +1,16 @@
 package ca.ubc.cs304.model;
 
-public class User {
+public class UserWithDietPlan {
     private final String name;
     private final int userId;
-    private final int phoneNumber;
+    private final String phoneNumber;
+    private final int dietPlanId;
 
-    public User(String name, int userId, int phoneNumber){
+    public UserWithDietPlan(String name, int userId, String phoneNumber, int dietPlanId){
         this.name = name;
         this.userId = userId;
         this.phoneNumber = phoneNumber;
+        this.dietPlanId = dietPlanId;
     }
 
     public String getName() {
@@ -17,7 +19,8 @@ public class User {
     public int getUserId() {
         return userId;
     }
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
+    public int getDietPlanId() { return dietPlanId; }
 }
