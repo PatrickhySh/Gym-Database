@@ -2,13 +2,19 @@ package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.GymFunctionDelegate;
-import ca.ubc.cs304.ui.TerminalTransactions;
 
 public class Gym implements GymFunctionDelegate {
     private DatabaseConnectionHandler dbHandler = null;
+    private final String userName = "ora_patri08";
+    private final String password = "a64817844";
 
-    public void login(String username, String password) {
-        boolean didConnect = dbHandler.login(username, password);
+
+    public Gym(){
+        dbHandler = new DatabaseConnectionHandler();
+    }
+
+    public void start() {
+        boolean didConnect = dbHandler.login(userName, password);
 
         if (didConnect) {
             // Once connected, remove login window and start text transaction flow
@@ -25,7 +31,6 @@ public class Gym implements GymFunctionDelegate {
                 loginWindow.dispose();
                 System.out.println("You have exceeded your number of allowed attempts");
                 System.exit(-1);
-
              */
             }
         }
@@ -35,11 +40,11 @@ public class Gym implements GymFunctionDelegate {
 
     }
 
-
     @Override
-    public void insertEquipment(Equipment equipment) {
+    public void insertEquipment(int id, String name) {
 
     }
+
 
     @Override
     public void deleteEquipment(int id) {
@@ -124,5 +129,10 @@ public class Gym implements GymFunctionDelegate {
     @Override
     public void terminalTransactionsFinished() {
 
+    }
+
+    public static void main(String args[]) {
+        Gym gym = new Gym();
+        gym.start();
     }
 }
