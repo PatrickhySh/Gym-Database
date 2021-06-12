@@ -2,6 +2,7 @@ package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.GymFunctionDelegate;
+import ca.ubc.cs304.ui.TerminalTransactions;
 
 public class Gym implements GymFunctionDelegate {
     private DatabaseConnectionHandler dbHandler = null;
@@ -18,11 +19,11 @@ public class Gym implements GymFunctionDelegate {
 
         if (didConnect) {
             // Once connected, remove login window and start text transaction flow
-            /*
+
             TerminalTransactions transaction = new TerminalTransactions();
             transaction.setupDatabase(this);
             transaction.showMainMenu(this);
-            */
+
         } else {
             /*
             loginWindow.handleLoginFailed();
