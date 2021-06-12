@@ -4,13 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
-import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.utility.SQLUtil;
 
 /**
@@ -23,8 +18,9 @@ public class DatabaseConnectionHandler {
 	private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
 	private static final String EXCEPTION_TAG = "[EXCEPTION]";
 	private static final String WARNING_TAG = "[WARNING]";
-	
-	private Connection connection = null;
+	private static Connection connection = null;
+
+	//private Connection connection = null;
 	
 	public DatabaseConnectionHandler() {
 		try {
@@ -36,7 +32,7 @@ public class DatabaseConnectionHandler {
 		}
 	}
 
-	public static void createDatabase(Connection connection) throws SQLException {
+	public static void createDatabase() throws SQLException {
 	    try {
             SQLUtil.executeFile(connection, new File("src/ca/ubc/cs304/sql/scripts/setup.sql"));
         } catch (IOException e) {
@@ -44,7 +40,7 @@ public class DatabaseConnectionHandler {
         }
     }
 
-    public static void populateDatabase(Connection connection) throws SQLException {
+    public static void populateDatabase() throws SQLException {
 	    try {
 	        SQLUtil.executeFile(connection, new File("src/ca/ubc/cs304/sql/scripts/populate.sql"));
         } catch (IOException e) {

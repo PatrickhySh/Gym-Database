@@ -13,13 +13,14 @@ import ca.ubc.cs304.delegates.GymFunctionDelegate;
 import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.BranchModel;
+import ca.ubc.cs304.utility.SQLUtil;
 
 import javax.swing.*;
 
 /**
  * The class is only responsible for handling terminal text inputs. 
  */
-public class TerminalTransactions extends JFrame implements ActionListener {
+public class GymFunction extends JFrame implements ActionListener {
 	private static final String EXCEPTION_TAG = "[EXCEPTION]";
 	private static final String WARNING_TAG = "[WARNING]";
 	private static final int INVALID_INPUT = Integer.MIN_VALUE;
@@ -32,7 +33,7 @@ public class TerminalTransactions extends JFrame implements ActionListener {
 
 	private JTextField textField;
 
-	public TerminalTransactions() {
+	public GymFunction() {
 	}
 	
 	/**
@@ -41,31 +42,6 @@ public class TerminalTransactions extends JFrame implements ActionListener {
 	 */
 	public void setupDatabase(GymFunctionDelegate delegate) {
 		this.delegate = delegate;
-		
-		bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-		int choice = INVALID_INPUT;
-
-		showFrame(delegate);
-
-		while(choice != 1 && choice != 2) {
-			System.out.println("If you have a table called Branch in your database (capitialization of the name does not matter), it will be dropped and a new Branch table will be created.\nIf you want to proceed, enter 1; if you want to quit, enter 2.");
-			
-			choice = readInteger(false);
-			
-			if (choice != INVALID_INPUT) {
-				switch (choice) {
-				case 1:  
-					delegate.databaseSetup(); 
-					break;
-				case 2:  
-					handleQuitOption();
-					break;
-				default:
-					System.out.println(WARNING_TAG + " The number that you entered was not a valid option.\n");
-					break;
-				}
-			}
-		}
 	}
 
 	public void showFrame(GymFunctionDelegate delegate) {
@@ -78,48 +54,24 @@ public class TerminalTransactions extends JFrame implements ActionListener {
 		JButton scheduleButton = new JButton("Show Schedule");
 
 		JPanel contentPane = new JPanel();
+		contentPane.setLayout(new FlowLayout());
 		this.setContentPane(contentPane);
 
-		// layout components using the GridBag layout manager
-		GridBagLayout gb = new GridBagLayout();
-		GridBagConstraints c = new GridBagConstraints();
 
-		contentPane.setLayout(gb);
-		contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		contentPane.add(userButton);
+		contentPane.add(trainerButton);
+		contentPane.add(dietPlanButton);
+		contentPane.add(exercisePlanButton);
+		contentPane.add(scheduleButton);
 
-		// place the username label
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(10, 10, 5, 0);
-		gb.setConstraints(usernameLabel, c);
-		contentPane.add(usernameLabel);
 
-		// place the text field for the username
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(10, 0, 5, 10);
-		gb.setConstraints(usernameField, c);
-		contentPane.add(usernameField);
-
-		// place password label
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		c.insets = new Insets(0, 10, 10, 0);
-		gb.setConstraints(passwordLabel, c);
-		contentPane.add(passwordLabel);
-
-		// place the password field
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(0, 0, 10, 10);
-		gb.setConstraints(passwordField, c);
-		contentPane.add(passwordField);
-
-		// place the login button
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(5, 10, 10, 10);
-		c.anchor = GridBagConstraints.CENTER;
-		gb.setConstraints(loginButton, c);
-		contentPane.add(loginButton);
 
 		// register login button with action event handler
-		loginButton.addActionListener(this);
+		userButton.addActionListener(this);
+		trainerButton.addActionListener(this);
+		dietPlanButton.addActionListener(this);
+		exercisePlanButton.addActionListener(this);
+		scheduleButton.addActionListener(this);
 
 		// anonymous inner class for closing the window
 		this.addWindowListener(new WindowAdapter() {
@@ -139,13 +91,11 @@ public class TerminalTransactions extends JFrame implements ActionListener {
 		// make the window visible
 		this.setVisible(true);
 
-		// place the cursor in the text field for the username
-		usernameField.requestFocus();
 	}
 
 	/**
 	 * Displays simple text interface
-	 */ 
+
 	public void showMainMenu(GymFunctionDelegate delegate) {
 		this.delegate = delegate;
 		
@@ -189,8 +139,7 @@ public class TerminalTransactions extends JFrame implements ActionListener {
 			}
 		}		
 	}
-	
-	private void handleDeleteOption() {
+	 private void handleDeleteOption() {
 		int branchId = INVALID_INPUT;
 		while (branchId == INVALID_INPUT) {
 			System.out.print("Please enter the branch ID you wish to delete: ");
@@ -298,7 +247,7 @@ public class TerminalTransactions extends JFrame implements ActionListener {
 		}
 		return result;
 	}
-
+*/
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

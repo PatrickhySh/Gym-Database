@@ -5,11 +5,11 @@ import ca.ubc.cs304.delegates.LoginWindowDelegate;
 import ca.ubc.cs304.delegates.TerminalTransactionsDelegate;
 import ca.ubc.cs304.model.BranchModel;
 import ca.ubc.cs304.ui.LoginWindow;
-import ca.ubc.cs304.ui.TerminalTransactions;
 
 /**
  * This is the main controller class that will orchestrate everything.
  */
+
 public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	private DatabaseConnectionHandler dbHandler = null;
 	private LoginWindow loginWindow = null;
@@ -27,15 +27,18 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	 * LoginWindowDelegate Implementation
 	 * 
      * connects to Oracle database with supplied username and password
-     */ 
+     */
+
 	public void login(String username, String password) {
+		/*
 		boolean didConnect = dbHandler.login(username, password);
+
 
 		if (didConnect) {
 			// Once connected, remove login window and start text transaction flow
 			loginWindow.dispose();
 
-			TerminalTransactions transaction = new TerminalTransactions();
+			GymFunction transaction = new GymFunction();
 			transaction.setupDatabase(this);
 			transaction.showMainMenu(this);
 		} else {
@@ -47,6 +50,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 				System.exit(-1);
 			}
 		}
+		*/
 	}
 	
 	/**
@@ -55,7 +59,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	 * Insert a branch with the given info
 	 */
     public void insertBranch(BranchModel model) {
-    	dbHandler.insertBranch(model);
+    	//dbHandler.insertBranch(model);
     }
 
     /**
@@ -64,7 +68,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	 * Delete branch with given branch ID.
 	 */ 
     public void deleteBranch(int branchId) {
-    	dbHandler.deleteBranch(branchId);
+    	//dbHandler.deleteBranch(branchId);
     }
     
     /**
@@ -74,7 +78,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	 */
 
     public void updateBranch(int branchId, String name) {
-    	dbHandler.updateBranch(branchId, name);
+    	//dbHandler.updateBranch(branchId, name);
     }
 
     /**
@@ -83,6 +87,7 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
 	 * Displays information about varies bank branches.
 	 */
     public void showBranch() {
+    	/*
     	BranchModel[] models = dbHandler.getBranchInfo();
     	
     	for (int i = 0; i < models.length; i++) {
@@ -105,6 +110,8 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
     		
     		System.out.println();
     	}
+
+    	 */
     }
 	
     /**
@@ -114,10 +121,13 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      * doing so we are cleaning up the connection since it's no longer needed.
      */ 
     public void terminalTransactionsFinished() {
+    	/*
     	dbHandler.close();
     	dbHandler = null;
     	
     	System.exit(0);
+
+    	 */
     }
     
     /**
@@ -127,15 +137,9 @@ public class Bank implements LoginWindowDelegate, TerminalTransactionsDelegate {
      * called branch and creating a new one for this project to use
      */ 
 	public void databaseSetup() {
-		dbHandler.databaseSetup();;
+		//dbHandler.databaseSetup();;
 		
 	}
     
-	/**
-	 * Main method called at launch time
-	 */
-	public static void main(String args[]) {
-		Bank bank = new Bank();
-		bank.start();
-	}
+
 }

@@ -2,10 +2,13 @@ package ca.ubc.cs304.controller;
 
 import ca.ubc.cs304.database.DatabaseConnectionHandler;
 import ca.ubc.cs304.delegates.GymFunctionDelegate;
-import ca.ubc.cs304.ui.TerminalTransactions;
+import ca.ubc.cs304.ui.GymFunction;
+
+import java.sql.SQLException;
 
 public class Gym implements GymFunctionDelegate {
-    private DatabaseConnectionHandler dbHandler = null;
+    private DatabaseConnectionHandler dbHandler;
+    private GymFunction functionWindow = null;
     private final String userName = "ora_patri08";
     private final String password = "a64817844";
 
@@ -16,29 +19,32 @@ public class Gym implements GymFunctionDelegate {
 
     public void start() {
         boolean didConnect = dbHandler.login(userName, password);
+        functionWindow = new GymFunction();
+        databaseSetup();
+        functionWindow.showFrame(this);
 
         if (didConnect) {
             // Once connected, remove login window and start text transaction flow
-
-            TerminalTransactions transaction = new TerminalTransactions();
-            transaction.setupDatabase(this);
-            transaction.showMainMenu(this);
+            System.out.println("Connected to Oracle");
+            functionWindow = new GymFunction();
+            functionWindow.setupDatabase(this);
+            functionWindow.showFrame(this);
 
         } else {
-            /*
-            loginWindow.handleLoginFailed();
-
-            if (loginWindow.hasReachedMaxLoginAttempts()) {
-                loginWindow.dispose();
-                System.out.println("You have exceeded your number of allowed attempts");
-                System.exit(-1);
-             */
+            //functionWindow.dispose();
+            System.out.println("Login Failed");
+            System.exit(-1);
             }
         }
 
     @Override
     public void databaseSetup() {
-
+        try{
+            dbHandler.createDatabase();
+            dbHandler.populateDatabase();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
